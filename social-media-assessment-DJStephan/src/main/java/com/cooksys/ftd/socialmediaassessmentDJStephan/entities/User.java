@@ -2,24 +2,55 @@ package com.cooksys.ftd.socialmediaassessmentDJStephan.entities;
 
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+@Entity
 public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
-	private String userName;
+	@Column(unique = true, nullable = false)
+	private String username;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	private Profile profile;
+	
+	@Column(nullable = false)
 	private Timestamp joined;
 	
-	public User(String userName, Profile profile) {
-		this.userName = userName;
+	@Column(nullable = false)
+	private boolean active;
+	
+	@OneToOne
+	@PrimaryKeyJoinColumn
+	private Credentials credentials;
+	
+	@Autowired
+	public User(Credentials credentials, Profile profile) {
+		this.credentials = credentials;
+		this.username = this.credentials.getUsername();
 		this.profile = profile;
 		this.joined = new Timestamp(System.currentTimeMillis());
+		this.active = true;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String userName) {
+		this.username = userName;
 	}
 
 	public Profile getProfile() {
@@ -37,6 +68,32 @@ public class User {
 	public void setJoined(Timestamp joined) {
 		this.joined = joined;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Credentials getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	
+	
 	
 	
 
