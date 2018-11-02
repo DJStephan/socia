@@ -47,6 +47,10 @@ public class User {
 	@PrimaryKeyJoinColumn
 	private Credentials credentials;
 	
+	@Column
+	@ElementCollection(targetClass=String.class)
+	private Set<String> followers = new HashSet<String>();
+	
 	public User() {}
 	
 	@Autowired
@@ -129,6 +133,23 @@ public class User {
 
 	public void setMentions(Set<Long> mentions) {
 		this.mentions = mentions;
+	}
+
+	public Set<String> getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(Set<String> followers) {
+		this.followers = followers;
+	}
+
+	public void addFollower(String usernameToAdd) {
+		this.followers.add(usernameToAdd);
+		
+	}
+	
+	public void removeFollower(String usernameToRemove) {
+		this.followers.remove(usernameToRemove);
 	}
 	
 	

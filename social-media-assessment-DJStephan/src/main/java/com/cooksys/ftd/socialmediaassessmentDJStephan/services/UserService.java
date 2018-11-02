@@ -1,5 +1,6 @@
 package com.cooksys.ftd.socialmediaassessmentDJStephan.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -139,10 +140,13 @@ public class UserService {
 		}
 		
 		User user = userRepository.findByUsername(credentials.getUsername());
+		User userToFollow =  userRepository.findByUsername(usernameToFollow);
 		if(user.getFollowing().contains(usernameToFollow)) {
 			//error already following
 		}
 		user.addFollow(usernameToFollow);
+		userToFollow.addFollower(user.getUsername());
+		userRepository.saveAndFlush(userToFollow);
 		userRepository.saveAndFlush(user);
 		
 	}
@@ -230,6 +234,41 @@ public class UserService {
 		
 		Tweet[] tweets = tweetRepository.findByIdIn(user.getMentions());
 		return tweetMapper.tweetsToTweetDtos(tweets);
+	}
+
+	public UserDto[] getFollowers(String username) {
+		User user = userRepository.findByUsername(username);
+		if(user == null || !(user.isActive())) {
+			//error no user
+		}
+		Set<String> followers = user.getFollowers();
+		List<User> followersToReturn = new ArrayList<User>();
+		for(String userFollowing : followers) {
+			User userToAdd = userRepository.findByUsername(userFollowing);
+			if(userToAdd.isActive()) {
+				followersToReturn.add(userToAdd);
+			}
+		}
+		
+		return usermapper.usersToUserDtos(followersToReturn);
+	}
+
+	public UserDto[] getFollowing(String username) {
+		User user = userRepository.findByUsername(username);
+		if(user == null || !(user.isActive())) {
+			//error no user
+		}
+		Set<String> following = user.getFollowing();
+		List<User> followersToReturn = new ArrayList<User>();
+		for(String userFollowing : following) {
+			User userToAdd = userRepository.findByUsername(userFollowing);
+			if(userToAdd.isActive()) {
+				followersToReturn.add(userToAdd);
+			}
+		}
+		
+		return usermapper.usersToUserDtos(followersToReturn);
+		
 	}
 
 

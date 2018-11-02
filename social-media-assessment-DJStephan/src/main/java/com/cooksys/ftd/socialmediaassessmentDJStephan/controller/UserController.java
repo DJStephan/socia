@@ -13,6 +13,8 @@ import com.cooksys.ftd.socialmediaassessmentDJStephan.dtos.CredentialsDto;
 import com.cooksys.ftd.socialmediaassessmentDJStephan.dtos.ProfileDto;
 import com.cooksys.ftd.socialmediaassessmentDJStephan.dtos.TweetDto;
 import com.cooksys.ftd.socialmediaassessmentDJStephan.dtos.UserDto;
+import com.cooksys.ftd.socialmediaassessmentDJStephan.entities.User;
+import com.cooksys.ftd.socialmediaassessmentDJStephan.repositories.UserRepository;
 import com.cooksys.ftd.socialmediaassessmentDJStephan.services.UserService;
 
 @RestController
@@ -78,5 +80,14 @@ public class UserController {
 	public TweetDto[] getMentions(@PathVariable(name = "username") String username) {
 		return userService.getMentions(username);
 	}
-
+	
+	@GetMapping("users/@{username}/followers")
+	public UserDto[] getFollowers(@PathVariable(name = "username") String username) {
+		return userService.getFollowers(username);
+	}
+	
+	@GetMapping("users/@{username}/following")
+	public UserDto[] getFollowing(@PathVariable(name = "username") String username) {
+		return userService.getFollowing(username);
+	}
 }
