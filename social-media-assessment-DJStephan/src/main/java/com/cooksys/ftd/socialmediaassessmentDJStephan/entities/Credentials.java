@@ -20,6 +20,8 @@ public class Credentials {
 	@Column(nullable = false)
 	private String password;
 	
+	public Credentials() {}
+	
 	@Autowired
 	public Credentials(String username, String password) {
 		this.username = username;

@@ -8,7 +8,7 @@ public interface CredentialsRepository extends JpaRepository<Credentials, Long>{
 
 	Credentials findByUsername(String userName);
 
-	void addCredentials(Credentials credentials);
+	
 	
 	
 

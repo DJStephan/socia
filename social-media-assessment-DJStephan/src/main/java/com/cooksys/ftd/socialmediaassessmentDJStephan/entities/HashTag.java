@@ -18,7 +18,9 @@ public class HashTag {
 	@Column(nullable = false)
 	private Timestamp lastUsed;
 	
-	public HashTag(String label) {
+	public HashTag() {}
+	
+	public HashTag(String label, Timestamp firstUsed, Timestamp lastUsed) {
 		this.label = label;
 		this.firstUsed = new Timestamp(System.currentTimeMillis());
 		this.lastUsed = new Timestamp(System.currentTimeMillis()); 

@@ -6,6 +6,6 @@ import com.cooksys.ftd.socialmediaassessmentDJStephan.entities.Profile;
 
 public interface ProfileRepository extends JpaRepository<Profile, Long>{
 
-	void addProfile(Profile profile);
+	
 
 }

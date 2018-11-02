@@ -1,5 +1,7 @@
 package com.cooksys.ftd.socialmediaassessmentDJStephan.mappers;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 
 import com.cooksys.ftd.socialmediaassessmentDJStephan.dtos.UserDto;
@@ -10,7 +12,7 @@ public interface UserMapper {
 
 	UserDto userToUserDto(User user);
 
-	UserDto[] usersToUserDtos(User[] users);
+	UserDto[] usersToUserDtos(List<User> users);
 	
 	
 	

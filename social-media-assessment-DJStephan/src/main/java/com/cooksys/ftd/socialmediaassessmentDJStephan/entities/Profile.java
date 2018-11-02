@@ -33,10 +33,15 @@ public class Profile {
 	@JoinColumn(name = "profile_id")
 	private User user;
 	
+	public Profile() {}
+	
 	@Autowired
-	public Profile(User user, String email) {
+	public Profile(User user, String email, String firstName, String lastName, String phone) {
 		this.email = email;
 		this.user = user;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
 	}
 
 	public Long getId() {

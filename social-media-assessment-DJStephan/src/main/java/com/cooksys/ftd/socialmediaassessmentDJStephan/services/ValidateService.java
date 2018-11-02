@@ -36,7 +36,7 @@ public class ValidateService {
 	}
 
 	public boolean validateUserName(String userName) {
-		if (this.userRepository.findByUserName(userName) != null) {
+		if (this.userRepository.findByUsername(userName) != null) {
 			return true;
 		}
 		return false;

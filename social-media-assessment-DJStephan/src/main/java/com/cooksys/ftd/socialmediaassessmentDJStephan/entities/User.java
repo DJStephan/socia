@@ -1,9 +1,12 @@
 package com.cooksys.ftd.socialmediaassessmentDJStephan.entities;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,9 +35,19 @@ public class User {
 	@Column(nullable = false)
 	private boolean active;
 	
+	@Column
+	@ElementCollection(targetClass=String.class)
+	private Set<String> following = new HashSet<String>();
+	
+	@Column
+	@ElementCollection(targetClass=Long.class)
+	private Set<Long> mentions = new HashSet<Long>();//tweets ids where mentioned
+	
 	@OneToOne
 	@PrimaryKeyJoinColumn
 	private Credentials credentials;
+	
+	public User() {}
 	
 	@Autowired
 	public User(Credentials credentials, Profile profile) {
@@ -43,6 +56,10 @@ public class User {
 		this.profile = profile;
 		this.joined = new Timestamp(System.currentTimeMillis());
 		this.active = true;
+	}
+	
+	public void addFollow(String username) {
+		this.following.add(username);
 	}
 
 	public String getUsername() {
@@ -92,6 +109,31 @@ public class User {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+	public Set<String> getFollowing() {
+		return following;
+	}
+
+	public void setFollowing(Set<String> following) {
+		this.following = following;
+	}
+
+	public void removeFollow(String usernameToUnfollow) {
+		this.following.remove(usernameToUnfollow);
+		
+	}
+
+	public Set<Long> getMentions() {
+		return mentions;
+	}
+
+	public void setMentions(Set<Long> mentions) {
+		this.mentions = mentions;
+	}
+	
+	
+	
+	
 	
 	
 	
